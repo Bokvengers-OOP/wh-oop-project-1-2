@@ -1,14 +1,18 @@
 #include "model.h"
 #include <fstream>
+#include <iostream>
 
 
-void MyFile::OpenFile() {
-	file.open("file1.txt");
-	if (file.fail()) {
-		//오류
-	}
+void MyFile::OpenFileToWrite() {
+	ofile.open("file1.txt");
+
+}
+
+void MyFile::OpenFileToRead() {
+	ifile.open("file1.txt");
+
 }
 
 void MyFile::WriteInfo() {
-	file << "글쓰기";
+	ofile << "글쓰기";
 }

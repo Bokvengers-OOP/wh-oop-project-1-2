@@ -5,9 +5,11 @@
 //MyFile
 class MyFile {
 private:
-	std::fstream file;
+	std::ofstream ofile;
+	std::ifstream ifile;
 
 public:
-	void OpenFile();
+	void OpenFileToWrite();
 	void WriteInfo();
+	void OpenFileToRead();
 };

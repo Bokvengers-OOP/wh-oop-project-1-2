@@ -34,7 +34,7 @@ void MoveMainToNext() {
 		insertionView.PutInformation();
 		//입력 정보들을 가지고 있다.,
 		MyFile myFile;
-		myFile.OpenFile();
+		myFile.OpenFileToWrite();
 		myFile.WriteInfo();
 
 		

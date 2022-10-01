@@ -49,17 +49,17 @@ void InsertionView::PutInformation() {
 	std::cout << "Name :: ";
 	std::cin >> name;
 
-	std::cin >> studentId;
 	std::cout << "Student ID (10 digits) :: ";
+	std::cin >> studentId;
 
-	std::cin >> birthYear;
 	std::cout << "Birth Year (4 digits) :: ";
+	std::cin >> birthYear;
 
-	std::cin >> Department;
 	std::cout << "Department :: ";
+	std::cin >> Department;
 
-	std::cin >> tel;
 	std::cout << "Tel :: ";
+	std::cin >> tel;
 
 }
 

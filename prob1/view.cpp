@@ -14,11 +14,22 @@ void MainMenu::PrintView() {
 }
 
 int MainMenu::GetNextView() {
-	std::cout << "> ";
-	std::cin >> nextView;
+	nextView = 0;
+	while (1) {
+		std::cout << "> ";
+		std::cin >> nextView;
 
-	return nextView;
-
+		if (nextView == 1 || nextView == 2 || nextView == 3 || nextView == 4 ) {
+			return nextView;
+		}
+		else {
+			std::cin.clear();
+			std::cin.ignore(256,'\n');
+			nextView = 0;
+			std::cout << "> WARNING!! input 1 or 2 or 3or 4 correctly again\n";
+		}
+		
+	}
 }
 
 void InsertionView::PrintView() {

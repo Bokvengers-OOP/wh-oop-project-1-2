@@ -41,6 +41,8 @@ prob1/x64
 prob1/prob1.vcxproj
 prob1/prob1.vcxproj.filters
 prob1/prob1.vcxproj.user
+prob1/Debug/
+prob1/Debug
 
 
 /x64

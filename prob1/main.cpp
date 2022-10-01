@@ -10,8 +10,8 @@ int GetNextPageNum() {
 
 void ClearView() {
 	try {
-		if (system("clear")) {	//성공시 0, 실패시 -1(if문 실행)
-			std::cout << "오류발생?\n";
+		if (system("clear")) {	//success case : 0, flase case : -1
+			std::cout << "error\n";
 			throw 0;
 		}
 	}

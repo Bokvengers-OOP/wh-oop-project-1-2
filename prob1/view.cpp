@@ -3,7 +3,7 @@
 #include "view.h"
 
 MainMenu::~MainMenu() {
-	std::cout << "¼Ò¸ê´ï..\n";
+	std::cout << "destroyed..\n";
 }
 
 void MainMenu::PrintView() {

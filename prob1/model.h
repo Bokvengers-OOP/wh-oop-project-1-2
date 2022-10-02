@@ -5,11 +5,12 @@
 //MyFile
 class MyFile {
 private:
-	std::ofstream ofile;
+	std::fstream ofile;
 	std::ifstream ifile;
 
 public:
 	void OpenFileToWrite();
-	void WriteInfo();
+	void WriteInfo(std::string& arg1, std::string& arg2, std::string& arg3,
+		std::string& arg4, std::string& arg5);
 	void OpenFileToRead();
 };

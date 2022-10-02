@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <iostream>
 #include "view.h"
+#include <string>
 
 //MainMenu
 MainMenu::~MainMenu() {
@@ -47,19 +48,38 @@ void InsertionView::PrintView() {
 
 void InsertionView::PutInformation() {
 	std::cout << "Name :: ";
-	std::cin >> name;
+	std::cin.ignore(256, '\n');
+	std::getline(std::cin, name);
+	if (name.capacity() > 15) name.erase(15); //예외 처리 지점 길이!
+
 
 	std::cout << "Student ID (10 digits) :: ";
-	std::cin >> studentId;
+	std::cin.ignore(256, '\n');
+	std::getline(std::cin, studentId);
 
 	std::cout << "Birth Year (4 digits) :: ";
-	std::cin >> birthYear;
+	std::cin.ignore(256, '\n');
+	std::getline(std::cin, birthYear);
 
 	std::cout << "Department :: ";
-	std::cin >> Department;
+	std::cin.ignore(256, '\n');
+	std::getline(std::cin, department);
 
 	std::cout << "Tel :: ";
-	std::cin >> tel;
+	std::cin.ignore(256, '\n');
+	std::getline(std::cin, tel);
+
+}
+
+void InsertionView::DispenseString(
+	std::string &arg1, std::string &arg2, std::string &arg3,
+	std::string &arg4, std::string &arg5) {
+	
+	arg1 = name;
+	arg2 = studentId;
+	arg3 = birthYear;
+	arg4 = department;
+	arg5 = tel;
 
 }
 

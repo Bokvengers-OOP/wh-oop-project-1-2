@@ -103,7 +103,7 @@ bool compareDepartmentName(std::vector<std::string> a, std::vector<std::string> 
 
 
 int MoveMainToNext(int& sortMode) {
-	ClearView();
+
 
 	// selectPage can be int 1~4 if it were not, that would be error occured!
 	int selectPage = GetNextPageNum();
@@ -228,7 +228,7 @@ int MoveMainToNext(int& sortMode) {
 				std::cout << telList[i] << "\n";
 			}
 			std::cout << "\nall items showed...!\n";
-			char pin = 'N';
+			std::string pin = "N";
 
 			//
 			for (int i = 0, end = students.size(); i < end; i++) {
@@ -241,13 +241,12 @@ int MoveMainToNext(int& sortMode) {
 			}
 
 
-			while (pin != 'Y') {
+			while (pin != "Y") {
 				std::cout << "[Plese enter 'Y' to go Main back]\n";
 				std::cin >> pin;
+				
 			}
-
-
-
+			ClearView();
 			break;
 		}
 		default: {
@@ -261,7 +260,7 @@ int MoveMainToNext(int& sortMode) {
 
 	case 3: {
 		sortMode = SelectSortMode();
-
+		ClearView();
 		//TODO!! sortMode 에따라 vector 정렬시키기
 		return 1;
 	}
@@ -269,6 +268,9 @@ int MoveMainToNext(int& sortMode) {
 	case 4: {
 		Exit();
 		return 0;
+	}
+	case 5: {
+		return 1;
 	}
 
 	default: {
@@ -283,5 +285,6 @@ int main() {
 	int sortMode = 1;
 	while (MoveMainToNext(sortMode));
 
+	system("pause");
 	return 0;
 }

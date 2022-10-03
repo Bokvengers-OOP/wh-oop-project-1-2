@@ -9,6 +9,7 @@ MainMenu::~MainMenu() {
 }
 
 void MainMenu::PrintView() {
+	std::cout << "- Main -\n";
 	std::cout << "1. Insertion\n";
 	std::cout << "2. Search\n";
 	std::cout << "3. Sorting Option\n";
@@ -36,7 +37,7 @@ int MainMenu::GetNextView() {
 
 //InsertionView
 void InsertionView::PrintView() {
-	std::cout << "1. Insertion\n";
+	std::cout << "- Insertion -\n";
 	std::cout << "Name ?\n";
 	std::cout << "Student ID (10 digits) ?\n";
 	std::cout << "Birth Year (4 digits) ?\n";

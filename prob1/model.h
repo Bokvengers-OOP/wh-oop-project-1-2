@@ -6,9 +6,11 @@
 //MyFile
 class MyFile {
 private:
+	//stream for fie connect
 	std::fstream ofile;
 	std::ifstream ifile;
 
+	//
 	std::vector<std::string> nameList;
 	std::vector<std::string> idList;
 	std::vector<std::string> birthYearList;
@@ -23,5 +25,8 @@ public:
 		std::string& arg4, std::string& arg5);
 	int OpenFileToRead(int& selectPage);
 	void CloseFile();
-	void setFileChek(int num);
+	void SetFileChek(int num);
+	void GetList(std::vector<std::string>& list1, std::vector<std::string>& list2,
+		std::vector<std::string>& list3, std::vector<std::string>& list4,
+		std::vector<std::string>& list5);
 };

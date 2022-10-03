@@ -1,13 +1,15 @@
 #include "model.h"
 #include <fstream>
 #include <iostream>
+#include <string>
+#include <vector>
 
 
 void MyFile::OpenFileToWrite() {
 	ofile.open("file1.txt", std::ios::out | std::ios::app);
 }
 
-void MyFile::setFileChek(int num) {
+void MyFile::SetFileChek(int num) {
 	fileCheck = num;
 }
 
@@ -42,7 +44,7 @@ int MyFile::OpenFileToRead(int& selectPage) {
 			buffer = "";
 			getline(ifile, buffer);
 			telList.push_back(buffer);
-			std::cout << buffer << "\n";
+			std::cout << buffer << "OpenFileToRead 에 이거 나오게 해놈\n";
 			buffer = "";
 		}
 		return 1;
@@ -75,3 +77,12 @@ void MyFile::WriteInfo(std::string& arg1, std::string& arg2, std::string& arg3,
 
 }
 
+void MyFile::GetList(std::vector<std::string>& list1, std::vector<std::string>& list2,
+	std::vector<std::string>& list3, std::vector<std::string>& list4, std::vector<std::string>& list5) {
+	list1 = nameList;
+	list2 = idList;
+	list3 = birthYearList;
+	list4 = departmentList;
+	list5 = telList;
+
+}

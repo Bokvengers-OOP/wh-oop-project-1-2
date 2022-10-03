@@ -43,11 +43,16 @@ public:
 	void PrintListAll(int sortMode);
 };
 
+//SortingOptionView
 class SortingOptionView {
+private:
+	int sortMode;
 public:
 	void PrintView();
+	int GetSortMode();
 };
 
+//Exit
 class ExitView {
 public:
 	void PrintView();

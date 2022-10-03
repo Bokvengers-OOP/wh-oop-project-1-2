@@ -8,13 +8,19 @@ int GetNextPageNum();
 void MoveMainToNext();
 
 //Control InsertionView
-void InputInfo(std::string& arg1, std::string& arg2, std::string& arg3,
-	std::string& arg4, std::string& arg5);
-void WriteInfo(std::string arg1, std::string arg2, std::string arg3,
-	std::string arg4, std::string arg5, int checkFile);
+void InputInfo(
+	std::string& arg1, std::string& arg2, std::string& arg3,
+	std::string& arg4, std::string& arg5
+);
+void WriteInfo(
+	std::string arg1, std::string arg2, std::string arg3,
+	std::string arg4, std::string arg5, int checkFile
+);
 
 //Control SearchView
 int SelectSerchMode();
+
+//Control SortingOptionView
 
 //Used basically
 void ClearView();
@@ -25,18 +31,7 @@ int GetNextPageNum() {
 	return mainMenu.GetNextView();
 }
 
-//Used basically
-void ClearView() {
-	try {
-		if (system("clear")) {	//success case : 0, flase case : -1
-			std::cout << "error\n";
-			throw 0;
-		}
-	}
-	catch (...) {
-		system("cls");
-	}
-}
+
 
 void InputInfo(std::string& arg1, std::string& arg2, std::string& arg3,
 	std::string& arg4, std::string& arg5) {
@@ -49,7 +44,7 @@ void InputInfo(std::string& arg1, std::string& arg2, std::string& arg3,
 void WriteInfo(std::string arg1, std::string arg2, std::string arg3,
 	std::string arg4, std::string arg5, int checkFile) {
 	MyFile myFile;
-	myFile.setFileChek(checkFile);
+	myFile.SetFileChek(checkFile);
 	myFile.OpenFileToWrite();
 	myFile.WriteInfo(arg1, arg2, arg3, arg4, arg5);
 	myFile.CloseFile();
@@ -61,6 +56,23 @@ int SelectSerchMode() {
 	return searchView.GetNextView();
 }
 
+int SelectSortMode() {
+	SortingOptionView sortingOptionView;
+	sortingOptionView.PrintView();
+	return sortingOptionView.GetSortMode();
+}
+
+void ClearView() {
+	try {
+		if (system("clear")) {	//success case : 0, flase case : -1
+			std::cout << "error\n";
+			throw 0;
+		}
+	}
+	catch (...) {
+		system("cls");
+	}
+}
 
 void MoveMainToNext(int& sortMode) {
 	// selectPage can be int 1~4 if it were not, that would be error occured!
@@ -68,15 +80,19 @@ void MoveMainToNext(int& sortMode) {
 	int checkFile;
 	ClearView();
 
-	//open file to read
 	std::vector<std::string> sortedNameList;
 	std::vector<std::string> idList;
 	std::vector<std::string> birthYearList;
 	std::vector<std::string> departmentList;
 	std::vector<std::string> telList;
 
+
+	//open file to read
 	MyFile myFileToRead;
 	checkFile = myFileToRead.OpenFileToRead(selectPage);
+	myFileToRead.GetList(
+		sortedNameList, idList, birthYearList, departmentList, telList
+	);
 
 	switch (selectPage)
 	{
@@ -93,11 +109,14 @@ void MoveMainToNext(int& sortMode) {
 
 		//model doesn't know view, vice versa
 		//if these function returned, objects related with funtions will be destroyed
-		InputInfo(stringBuffer1, stringBuffer2,
-			stringBuffer3, stringBuffer4, stringBuffer5);
+		InputInfo(
+			stringBuffer1, stringBuffer2, stringBuffer3, stringBuffer4, stringBuffer5
+		);
 		ClearView();
-		WriteInfo(stringBuffer1, stringBuffer2,
-			stringBuffer3, stringBuffer4, stringBuffer5, checkFile);
+		WriteInfo(
+			stringBuffer1, stringBuffer2, stringBuffer3,
+			stringBuffer4, stringBuffer5, checkFile
+		);
 		break; //return 으로 control 가능!
 	}
 
@@ -140,9 +159,7 @@ void MoveMainToNext(int& sortMode) {
 	}
 
 	case 3: {
-		SortingOptionView sortingOptionView;
-		ClearView();
-		sortingOptionView.PrintView();
+		sortMode = SelectSortMode();
 		break;
 	}
 

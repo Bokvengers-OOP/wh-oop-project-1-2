@@ -108,19 +108,38 @@ int SearchView::GetNextView() {
 	}
 }
 
-void SearchView::PirntSearchByName() {
-
-}	
+void SearchView::PirntSearchByName() {}	
 void SearchView::PrintSearchByID() {}
 void SearchView::PrintSearchByAdmissionYear() {}
 void SearchView::PrintSearchByDepartment() {}
-void SearchView::PrintListAll(int sortMode) {
-}
+void SearchView::PrintListAll(int sortMode) {}
 
 
 //SortionOptionView
 void SortingOptionView::PrintView() {
-	std::cout << "3. Sorting Option\n";
+	std::cout << "- Sorting Option -\n";
+	std::cout << "1. Sort by Name\n";
+	std::cout << "2. Sort by Student ID\n";
+	std::cout << "3. Sort by Admission Year\n";
+	std::cout << "4. Sort by Department name\n";
+}
+
+int SortingOptionView::GetSortMode() {
+	sortMode = 0;
+	while (1) {
+		std::cout << "> ";
+		std::cin >> sortMode;
+
+		if (sortMode == 1 || sortMode == 2 || sortMode == 3 || sortMode == 4) {
+			return sortMode;
+		}
+		else {
+			std::cin.clear();
+			std::cin.ignore(256, '\n');
+			sortMode = 0;
+			std::cout << "> WARNING!! input 1 or 2 or 3or 4 correctly again\n";
+		}
+	}
 }
 
 //ExitView

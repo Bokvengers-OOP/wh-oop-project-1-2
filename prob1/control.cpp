@@ -11,7 +11,7 @@ void MoveMainToNext();
 void InputInfo(std::string& arg1, std::string& arg2, std::string& arg3,
 	std::string& arg4, std::string& arg5);
 void WriteInfo(std::string arg1, std::string arg2, std::string arg3,
-	std::string arg4, std::string arg5);
+	std::string arg4, std::string arg5, int checkFile);
 
 //Control SearchView
 int SelectSerchMode();
@@ -47,8 +47,9 @@ void InputInfo(std::string& arg1, std::string& arg2, std::string& arg3,
 }
 
 void WriteInfo(std::string arg1, std::string arg2, std::string arg3,
-	std::string arg4, std::string arg5) {
+	std::string arg4, std::string arg5, int checkFile) {
 	MyFile myFile;
+	myFile.setFileChek(checkFile);
 	myFile.OpenFileToWrite();
 	myFile.WriteInfo(arg1, arg2, arg3, arg4, arg5);
 	myFile.CloseFile();
@@ -64,6 +65,7 @@ int SelectSerchMode() {
 void MoveMainToNext(int& sortMode) {
 	// selectPage can be int 1~4 if it were not, that would be error occured!
 	int selectPage = GetNextPageNum();
+	int checkFile;
 	ClearView();
 
 	//open file to read
@@ -74,7 +76,7 @@ void MoveMainToNext(int& sortMode) {
 	std::vector<std::string> telList;
 
 	MyFile myFileToRead;
-	myFileToRead.OpenFileToRead(selectPage);
+	checkFile = myFileToRead.OpenFileToRead(selectPage);
 
 	switch (selectPage)
 	{
@@ -95,7 +97,7 @@ void MoveMainToNext(int& sortMode) {
 			stringBuffer3, stringBuffer4, stringBuffer5);
 		ClearView();
 		WriteInfo(stringBuffer1, stringBuffer2,
-			stringBuffer3, stringBuffer4, stringBuffer5);
+			stringBuffer3, stringBuffer4, stringBuffer5, checkFile);
 		break; //return 으로 control 가능!
 	}
 
@@ -168,4 +170,3 @@ int main() {
 
 	return 0;
 }
-

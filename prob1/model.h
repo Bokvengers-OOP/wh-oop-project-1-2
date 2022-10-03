@@ -15,10 +15,13 @@ private:
 	std::vector<std::string> departmentList;
 	std::vector<std::string> telList;
 
+	int fileCheck;
+
 public:
 	void OpenFileToWrite();
 	void WriteInfo(std::string& arg1, std::string& arg2, std::string& arg3,
 		std::string& arg4, std::string& arg5);
-	void OpenFileToRead(int& selectPage);
+	int OpenFileToRead(int& selectPage);
 	void CloseFile();
+	void setFileChek(int num);
 };

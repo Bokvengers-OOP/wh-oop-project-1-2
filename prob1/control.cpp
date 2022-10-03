@@ -5,7 +5,7 @@
 
 //Control Mainview
 int GetNextPageNum();
-void MoveMainToNext();
+int MoveMainToNext();
 
 //Control InsertionView
 void InputInfo(
@@ -21,6 +21,10 @@ void WriteInfo(
 int SelectSerchMode();
 
 //Control SortingOptionView
+int SelectSortMode();
+
+//Control ExitView
+void Exit();
 
 //Used basically
 void ClearView();
@@ -62,6 +66,11 @@ int SelectSortMode() {
 	return sortingOptionView.GetSortMode();
 }
 
+void Exit() {
+	ExitView exitView;
+	exitView.PrintView();
+}
+
 void ClearView() {
 	try {
 		if (system("clear")) {	//success case : 0, flase case : -1
@@ -74,13 +83,16 @@ void ClearView() {
 	}
 }
 
-void MoveMainToNext(int& sortMode) {
-	// selectPage can be int 1~4 if it were not, that would be error occured!
-	int selectPage = GetNextPageNum();
-	int checkFile;
+int MoveMainToNext(int& sortMode) {
 	ClearView();
 
-	std::vector<std::string> sortedNameList;
+	// selectPage can be int 1~4 if it were not, that would be error occured!
+	int selectPage = GetNextPageNum();
+	ClearView();
+	int checkFile;
+	
+
+	std::vector<std::string> nameList;
 	std::vector<std::string> idList;
 	std::vector<std::string> birthYearList;
 	std::vector<std::string> departmentList;
@@ -91,8 +103,9 @@ void MoveMainToNext(int& sortMode) {
 	MyFile myFileToRead;
 	checkFile = myFileToRead.OpenFileToRead(selectPage);
 	myFileToRead.GetList(
-		sortedNameList, idList, birthYearList, departmentList, telList
+		nameList, idList, birthYearList, departmentList, telList
 	);
+
 
 	switch (selectPage)
 	{
@@ -117,14 +130,14 @@ void MoveMainToNext(int& sortMode) {
 			stringBuffer1, stringBuffer2, stringBuffer3,
 			stringBuffer4, stringBuffer5, checkFile
 		);
-		break; //return 으로 control 가능!
+		return 1;
 	}
 
 	case 2: {
 
 		int SearchMode = SelectSerchMode();
 		ClearView();
-		switch (SearchMode)
+		switch (SearchMode)	//TODO!! SearchMode에 따라 Search 구현하기
 		{
 		case 1: {
 
@@ -144,8 +157,21 @@ void MoveMainToNext(int& sortMode) {
 		}
 		case 5: {
 			//buffer to sort
-
-
+			int end = nameList.size();
+			std::cout << end;
+			for (int i = 0; i < end; i++) {
+				std::cout << nameList[i] << " ";
+				std::cout << idList[i] << " ";
+				std::cout << birthYearList[i] << " ";
+				std::cout << departmentList[i] << " ";
+				std::cout << telList[i] << "\n";
+			}
+			std::cout << "\nall items showed...!\n";
+			char pin = 'N';
+			while (pin != 'Y') {
+				std::cout << "[Plese enter 'Y' to go Main back]\n";
+				std::cin >> pin;
+			}
 
 			break;
 		}
@@ -155,27 +181,24 @@ void MoveMainToNext(int& sortMode) {
 
 		}
 
-		break;
+		return 1;
 	}
 
 	case 3: {
 		sortMode = SelectSortMode();
-		break;
+
+		//TODO!! sortMode 에따라 vector 정렬시키기
+		return 1;
 	}
 
 	case 4: {
-		ExitView exitView;
-		ClearView();
-		exitView.PrintView();
-		break;
-	}
-	case 5: {
-		break;
+		Exit();
+		return 0;
 	}
 
 	default: {
 		std::cout << "unpredictable error occured!! X_X";
-		break;
+		return 0;
 	}
 
 	}
@@ -183,7 +206,7 @@ void MoveMainToNext(int& sortMode) {
 
 int main() {
 	int sortMode = 1;
-	while (1) MoveMainToNext(sortMode);
+	while (MoveMainToNext(sortMode)) ;
 
 	return 0;
 }

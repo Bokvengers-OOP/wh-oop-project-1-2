@@ -28,23 +28,18 @@ int MyFile::OpenFileToRead(int& selectPage) {
 		while (!ifile.eof()) {
 			getline(ifile, buffer);
 			nameList.push_back(buffer);
-			std::cout << buffer << "\n";
 			buffer = "";
-			getline(ifile, buffer);
+			getline(ifile, buffer);			
 			idList.push_back(buffer);
-			std::cout << buffer << "\n";
 			buffer = "";
 			getline(ifile, buffer);
 			birthYearList.push_back(buffer);
-			std::cout << buffer << "\n";
 			buffer = "";
 			getline(ifile, buffer);
 			departmentList.push_back(buffer);
-			std::cout << buffer << "\n";
 			buffer = "";
 			getline(ifile, buffer);
 			telList.push_back(buffer);
-			std::cout << buffer << "OpenFileToRead 에 이거 나오게 해놈\n";
 			buffer = "";
 		}
 		return 1;
@@ -84,5 +79,4 @@ void MyFile::GetList(std::vector<std::string>& list1, std::vector<std::string>& 
 	list3 = birthYearList;
 	list4 = departmentList;
 	list5 = telList;
-
 }

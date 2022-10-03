@@ -144,6 +144,6 @@ int SortingOptionView::GetSortMode() {
 
 //ExitView
 void ExitView::PrintView() {
-	std::cout << "4. Exit\n";
+	std::cout << "- Exit Program -\n";
 }
 

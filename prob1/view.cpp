@@ -30,7 +30,6 @@ int MainMenu::GetNextView() {
 			nextView = 0;
 			std::cout << "> WARNING!! input 1 or 2 or 3or 4 correctly again\n";
 		}
-		
 	}
 }
 
@@ -48,27 +47,23 @@ void InsertionView::PrintView() {
 
 void InsertionView::PutInformation() {
 	std::cout << "Name :: ";
+	std::cin.clear();
 	std::cin.ignore(256, '\n');
 	std::getline(std::cin, name);
 	if (name.capacity() > 15) name.erase(15); //예외 처리 지점 길이!
 
 
 	std::cout << "Student ID (10 digits) :: ";
-	std::cin.ignore(256, '\n');
 	std::getline(std::cin, studentId);
 
 	std::cout << "Birth Year (4 digits) :: ";
-	std::cin.ignore(256, '\n');
 	std::getline(std::cin, birthYear);
 
 	std::cout << "Department :: ";
-	std::cin.ignore(256, '\n');
 	std::getline(std::cin, department);
 
 	std::cout << "Tel :: ";
-	std::cin.ignore(256, '\n');
 	std::getline(std::cin, tel);
-
 }
 
 void InsertionView::DispenseString(
@@ -86,7 +81,31 @@ void InsertionView::DispenseString(
 
 //SearchView
 void SearchView::PrintView() {
-	std::cout << "2. Search\n";
+	std::cout << "- Search -\n";
+	std::cout << "1. Search by name\n";
+	std::cout << "2. Search by student ID (10 numbers)\n";
+	std::cout << "3. Search by admission year (4 numbers)\n";
+	std::cout << "4. Search by department name\n";
+	std::cout << "5. List All\n";
+}
+
+int SearchView::GetNextView() {
+	nextView = 0;
+	while (1) {
+		std::cout << "> ";
+		std::cin >> nextView;
+
+		if (nextView == 1 || nextView == 2 || nextView == 3 ||
+			nextView == 4 || nextView == 5) {
+			return nextView;
+		}
+		else {
+			std::cin.clear();
+			std::cin.ignore(256, '\n');
+			nextView = 0;
+			std::cout << "> WARNING!! input 1 or 2 or 3 or 4 or 5 correctly again\n";
+		}
+	}
 }
 
 

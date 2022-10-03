@@ -27,10 +27,13 @@ public:
 };
 
 
-
+//SearchView
 class SearchView {
+private:
+	int nextView;
 public:
 	void PrintView();
+	int GetNextView();
 };
 
 class SortingOptionView {

@@ -13,6 +13,9 @@ void InputInfo(std::string& arg1, std::string& arg2, std::string& arg3,
 void WriteInfo(std::string arg1, std::string arg2, std::string arg3,
 	std::string arg4, std::string arg5);
 
+//Control SearchView
+int SelectSerchMode();
+
 //Used basically
 void ClearView();
 
@@ -38,7 +41,6 @@ void ClearView() {
 void InputInfo(std::string& arg1, std::string& arg2, std::string& arg3,
 	std::string& arg4, std::string& arg5) {
 	InsertionView insertionView;
-	ClearView();
 	insertionView.PrintView();
 	insertionView.PutInformation();
 	insertionView.DispenseString(arg1, arg2, arg3, arg4, arg5);
@@ -51,9 +53,17 @@ void WriteInfo(std::string arg1, std::string arg2, std::string arg3,
 	myFile.WriteInfo(arg1, arg2, arg3, arg4, arg5);
 }
 
+int SelectSerchMode() {
+	SearchView searchView;
+	searchView.PrintView();
+	return searchView.GetNextView();
+}
+
 
 void MoveMainToNext() {
+	// selectPage can be int 1~4 if it were not, that would be error occured!
 	int selectPage = GetNextPageNum();
+	ClearView();
 	 
 	switch (selectPage)
 	{
@@ -65,44 +75,76 @@ void MoveMainToNext() {
 		std::string stringBuffer4;
 		std::string stringBuffer5;
 
-		//이부분 함수로 묶으면 좋을지도? 객체 소멸해서
+		//model doesn't know view, vice versa
+		//if these function returned, objects related with funtions will be destroyed
 		InputInfo(stringBuffer1, stringBuffer2,
 			stringBuffer3, stringBuffer4, stringBuffer5);
+		ClearView();
 		WriteInfo(stringBuffer1, stringBuffer2,
 			stringBuffer3, stringBuffer4, stringBuffer5);
-
-
-		//입력 정보들을 가지고 있다.,
-		
-
-		break; //return  이 되어야 할것같음
+		break; //return 으로 control 가능!
 	}
+
 	case 2: {
-		SearchView searchView;
+
+		int SearchMode = SelectSerchMode();
 		ClearView();
-		searchView.PrintView();
+		switch (SearchMode)
+		{
+		case 1: {
+
+			break;
+		}
+		case 2: {
+
+			break;
+		}
+		case 3: {
+
+			break;
+		}
+		case 4: {
+
+			break;
+		}
+		case 5: {
+			ClearView();
+			break;
+		}
+		default: {
+			break;
+		}
+			
+		}
+
 		break;
 	}
+
 	case 3: {
 		SortingOptionView sortingOptionView;
 		ClearView();
 		sortingOptionView.PrintView();
 		break;
 	}
+
 	case 4: {
 		ExitView exitView;
 		ClearView();
 		exitView.PrintView();
 		break;
 	}
+
 	default: {
-		std::cout << "Unknown";
+		std::cout << "unpredictable error occured!! X_X";
 		break;
 	}
 
 	}
 }
 
-void main() {
-	MoveMainToNext();
+int main() {
+	while(1) MoveMainToNext();
+
+	return 0;
 }
+

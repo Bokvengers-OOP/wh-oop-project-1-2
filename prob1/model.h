@@ -10,7 +10,7 @@ private:
 	std::fstream ofile;
 	std::ifstream ifile;
 
-	//
+	//variables used in model part
 	std::vector<std::string> nameList;
 	std::vector<std::string> idList;
 	std::vector<std::string> birthYearList;

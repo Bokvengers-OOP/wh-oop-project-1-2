@@ -26,7 +26,6 @@ public:
 		std::string& arg4, std::string& arg5);
 };
 
-
 //SearchView
 class SearchView {
 private:

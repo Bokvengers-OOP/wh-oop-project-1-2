@@ -2,6 +2,7 @@
 #include "model.h"
 #include <iostream>
 #include <cstdlib>
+#include <algorithm>
 
 //Control Mainview
 int GetNextPageNum();
@@ -83,6 +84,24 @@ void ClearView() {
 	}
 }
 
+bool compareName(std::vector<std::string> a, std::vector<std::string> b) {
+	return a[0] < b[0];
+}
+
+bool compareID(std::vector<std::string> a, std::vector<std::string> b) {
+	return a[1] < b[1];
+}
+
+bool compareAdmissionYear(std::vector<std::string> a, std::vector<std::string> b) {
+	return a[5] < b[5];
+}
+
+bool compareDepartmentName(std::vector<std::string> a, std::vector<std::string> b) {
+	return a[3] < b[3];
+}
+
+
+
 int MoveMainToNext(int& sortMode) {
 	ClearView();
 
@@ -90,27 +109,70 @@ int MoveMainToNext(int& sortMode) {
 	int selectPage = GetNextPageNum();
 	ClearView();
 	int checkFile;
-	
 
-	std::vector<std::string> nameList;
-	std::vector<std::string> idList;
-	std::vector<std::string> birthYearList;
-	std::vector<std::string> departmentList;
-	std::vector<std::string> telList;
+	
+	std::vector<std::vector<std::string>> students;
+
+	std::vector<std::string> nameList;			//index 0
+	std::vector<std::string> idList;			//index 1
+	std::vector<std::string> birthYearList;		//index 2
+	std::vector<std::string> departmentList;	//index 3
+	std::vector<std::string> telList;			//index 4
+	std::vector<std::string> admisstionYear;	//index 5
 
 
 	//open file to read
+	//파일에서 읽어온 정보들을 control 단에서 통제하기 위한 변수에 저장
 	MyFile myFileToRead;
 	checkFile = myFileToRead.OpenFileToRead(selectPage);
 	myFileToRead.GetList(
 		nameList, idList, birthYearList, departmentList, telList
 	);
 
+	for (int i = 0, end = idList.size(); i < end; i++) {
+		admisstionYear.push_back(idList[i].substr(0, 4));
+	}
+
+	for (int i = 0, end = nameList.size(); i < end; i++) {
+		std::vector<std::string> temp;
+		temp.push_back(nameList[i]);
+		temp.push_back(idList[i]);
+		temp.push_back(birthYearList[i]);
+		temp.push_back(departmentList[i]);
+		temp.push_back(telList[i]);
+		temp.push_back(admisstionYear[i]);
+		students.push_back(temp);
+		temp.clear();
+	}
+	
+	//sort mode에 따라 정렬!
+	switch (sortMode)
+	{
+	case 1: {
+		std::sort(students.begin(), students.end(), compareName);
+		break;
+	}
+	case 2: {
+		std::sort(students.begin(), students.end(), compareID);
+		break;
+	}
+	case 3: {
+		std::sort(students.begin(), students.end(), compareAdmissionYear);
+		break;
+	}
+	case 4: {
+		std::sort(students.begin(), students.end(), compareDepartmentName);
+		break;
+	}
+	default:
+		break;
+	}
+	
 
 	switch (selectPage)
 	{
 	case 1: {
-		//insert에서는 읽기 모드 파일 close
+		// close read mode stream
 		myFileToRead.CloseFile();
 
 		//buffer
@@ -158,20 +220,33 @@ int MoveMainToNext(int& sortMode) {
 		case 5: {
 			//buffer to sort
 			int end = nameList.size();
-			std::cout << end;
 			for (int i = 0; i < end; i++) {
 				std::cout << nameList[i] << " ";
 				std::cout << idList[i] << " ";
-				std::cout << birthYearList[i] << " ";
 				std::cout << departmentList[i] << " ";
+				std::cout << birthYearList[i] << " ";
 				std::cout << telList[i] << "\n";
 			}
 			std::cout << "\nall items showed...!\n";
 			char pin = 'N';
+
+			//
+			for (int i = 0, end = students.size(); i < end; i++) {
+				std::cout << students[i][0] << " ";
+				std::cout << students[i][1] << " ";
+				std::cout << students[i][3] << " ";
+				std::cout << students[i][2] << " ";
+				std::cout << students[i][4] << "\n";
+
+			}
+
+
 			while (pin != 'Y') {
 				std::cout << "[Plese enter 'Y' to go Main back]\n";
 				std::cin >> pin;
 			}
+
+
 
 			break;
 		}
@@ -206,7 +281,7 @@ int MoveMainToNext(int& sortMode) {
 
 int main() {
 	int sortMode = 1;
-	while (MoveMainToNext(sortMode)) ;
+	while (MoveMainToNext(sortMode));
 
 	return 0;
 }

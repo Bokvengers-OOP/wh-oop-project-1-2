@@ -34,6 +34,13 @@ private:
 public:
 	void PrintView();
 	int GetNextView();
+
+	//after select search mode
+	void PirntSearchByName();
+	void PrintSearchByID();
+	void PrintSearchByAdmissionYear();
+	void PrintSearchByDepartment();
+	void PrintListAll(int sortMode);
 };
 
 class SortingOptionView {

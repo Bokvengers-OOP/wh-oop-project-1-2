@@ -51,6 +51,7 @@ void WriteInfo(std::string arg1, std::string arg2, std::string arg3,
 	MyFile myFile;
 	myFile.OpenFileToWrite();
 	myFile.WriteInfo(arg1, arg2, arg3, arg4, arg5);
+	myFile.CloseFile();
 }
 
 int SelectSerchMode() {
@@ -60,14 +61,27 @@ int SelectSerchMode() {
 }
 
 
-void MoveMainToNext() {
+void MoveMainToNext(int& sortMode) {
 	// selectPage can be int 1~4 if it were not, that would be error occured!
 	int selectPage = GetNextPageNum();
 	ClearView();
-	 
+
+	//open file to read
+	std::vector<std::string> sortedNameList;
+	std::vector<std::string> idList;
+	std::vector<std::string> birthYearList;
+	std::vector<std::string> departmentList;
+	std::vector<std::string> telList;
+
+	MyFile myFileToRead;
+	myFileToRead.OpenFileToRead(selectPage);
+
 	switch (selectPage)
 	{
 	case 1: {
+		//insert에서는 읽기 모드 파일 close
+		myFileToRead.CloseFile();
+
 		//buffer
 		std::string stringBuffer1;
 		std::string stringBuffer2;
@@ -108,13 +122,16 @@ void MoveMainToNext() {
 			break;
 		}
 		case 5: {
-			ClearView();
+			//buffer to sort
+
+
+
 			break;
 		}
 		default: {
 			break;
 		}
-			
+
 		}
 
 		break;
@@ -133,6 +150,9 @@ void MoveMainToNext() {
 		exitView.PrintView();
 		break;
 	}
+	case 5: {
+		break;
+	}
 
 	default: {
 		std::cout << "unpredictable error occured!! X_X";
@@ -143,7 +163,8 @@ void MoveMainToNext() {
 }
 
 int main() {
-	while(1) MoveMainToNext();
+	int sortMode = 1;
+	while (1) MoveMainToNext(sortMode);
 
 	return 0;
 }

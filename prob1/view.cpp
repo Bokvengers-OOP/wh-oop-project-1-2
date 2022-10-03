@@ -108,6 +108,15 @@ int SearchView::GetNextView() {
 	}
 }
 
+void SearchView::PirntSearchByName() {
+
+}	
+void SearchView::PrintSearchByID() {}
+void SearchView::PrintSearchByAdmissionYear() {}
+void SearchView::PrintSearchByDepartment() {}
+void SearchView::PrintListAll(int sortMode) {
+}
+
 
 //SortionOptionView
 void SortingOptionView::PrintView() {

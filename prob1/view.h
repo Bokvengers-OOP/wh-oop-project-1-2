@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector> 
 
 //MainMenu
 class MainMenu {
@@ -30,17 +31,26 @@ public:
 class SearchView {
 private:
 	int nextView;
-public:
-	void PrintView();
-	int GetNextView();
 
 	//after select search mode
 	void PirntSearchByName();
 	void PrintSearchByID();
 	void PrintSearchByAdmissionYear();
 	void PrintSearchByDepartment();
-	void PrintListAll(int sortMode);
+
+public:
+	void PrintView();
+	int GetNextView();
+	SearchView(int searchMode);
+	SearchView();
+
+	//print search mode
+	std::string PrintSearchModeView();
+	void PrintSearchByKeyword(int n, std::string &keyword,
+		std::vector<std::vector<std::string>>& students);
+
 };
+
 
 //SortingOptionView
 class SortingOptionView {

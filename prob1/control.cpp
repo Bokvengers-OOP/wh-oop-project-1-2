@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <algorithm>
+#include <iomanip>
 
 //Control Mainview
 int GetNextPageNum();
@@ -20,6 +21,9 @@ void WriteInfo(
 
 //Control SearchView
 int SelectSerchMode();
+std::string GetSearchKeyword(int searchMode);
+void PrintByKeyword(int n, std::string& keyword,
+	std::vector<std::vector<std::string>>& students);
 
 //Control SortingOptionView
 int SelectSortMode();
@@ -35,8 +39,6 @@ int GetNextPageNum() {
 	mainMenu.PrintView();
 	return mainMenu.GetNextView();
 }
-
-
 
 void InputInfo(std::string& arg1, std::string& arg2, std::string& arg3,
 	std::string& arg4, std::string& arg5) {
@@ -59,6 +61,49 @@ int SelectSerchMode() {
 	SearchView searchView;
 	searchView.PrintView();
 	return searchView.GetNextView();
+}
+
+std::string GetSearchKeyword(int searchMode) {
+	SearchView searchView(searchMode);
+	return searchView.PrintSearchModeView();
+}
+
+void PrintByKeyword(int n, std::string& keyword,
+	std::vector<std::vector<std::string>>& students) {
+	switch (n)
+	{
+	case 1: {
+		SearchView KeywordView;
+		KeywordView.PrintSearchByKeyword(0, keyword, students);
+		break;
+	}
+	case 2: {
+		SearchView().PrintSearchByKeyword(1, keyword, students);
+		break;
+	}
+	case 3: {
+		SearchView().PrintSearchByKeyword(5, keyword, students);
+		break;
+	}
+	case 4: {
+		SearchView KeywordView;
+		KeywordView.PrintSearchByKeyword(3, keyword, students);
+		break;
+	}
+	case 5: {
+		std::cout << std::setw(16) << "Name" << std::setw(11) << "StudentID" << std::setw(20)
+			<< "Dept" << std::setw(12) << "Birth Year" << std::setw(11) << "Tel" << "\n";
+		for (int i = 0; i < students.size(); i++) {
+			std::cout << std::setw(16) << students[i][0] << std::setw(11) << students[i][1] << std::setw(20)
+				<< students[i][3] << std::setw(12) << students[i][2] << std::setw(11) << students[i][4] << "\n";
+			std::cout.clear();
+		}
+		std::cout << "\nall items showed...!\n\n";
+	}
+	default:
+		break;
+	}
+
 }
 
 int SelectSortMode() {
@@ -84,6 +129,7 @@ void ClearView() {
 	}
 }
 
+//function for sortin option
 bool compareName(std::vector<std::string> a, std::vector<std::string> b) {
 	return a[0] < b[0];
 }
@@ -104,13 +150,12 @@ bool compareDepartmentName(std::vector<std::string> a, std::vector<std::string> 
 
 int MoveMainToNext(int& sortMode) {
 
-
 	// selectPage can be int 1~4 if it were not, that would be error occured!
 	int selectPage = GetNextPageNum();
 	ClearView();
 	int checkFile;
 
-	
+
 	std::vector<std::vector<std::string>> students;
 
 	std::vector<std::string> nameList;			//index 0
@@ -144,7 +189,7 @@ int MoveMainToNext(int& sortMode) {
 		students.push_back(temp);
 		temp.clear();
 	}
-	
+
 	//sort mode에 따라 정렬!
 	switch (sortMode)
 	{
@@ -167,7 +212,6 @@ int MoveMainToNext(int& sortMode) {
 	default:
 		break;
 	}
-	
 
 	switch (selectPage)
 	{
@@ -196,55 +240,42 @@ int MoveMainToNext(int& sortMode) {
 	}
 
 	case 2: {
-
-		int SearchMode = SelectSerchMode();
+		int searchMode = SelectSerchMode();
 		ClearView();
-		switch (SearchMode)	//TODO!! SearchMode에 따라 Search 구현하기
+
+		std::vector<std::string>::iterator it;
+		std::string keyword;
+		std::vector<int> resultIndex;
+		std::cout << std::left;
+		switch (searchMode)	//TODO!! SearchMode에 따라 Search 구현하기
 		{
-		case 1: {
+		case 1: {	//search by name
+			keyword = GetSearchKeyword(searchMode);
+			PrintByKeyword(searchMode, keyword, students);
 
 			break;
 		}
-		case 2: {
-
+		case 2: {	//search by student id
+			keyword = GetSearchKeyword(searchMode);
+			PrintByKeyword(searchMode, keyword, students);
 			break;
 		}
-		case 3: {
-
+		case 3: {	//search by admisstion year
+			keyword = GetSearchKeyword(searchMode);
+			PrintByKeyword(searchMode, keyword, students);
 			break;
 		}
-		case 4: {
-
+		case 4: {	//search by department name
+			keyword = GetSearchKeyword(searchMode);
+			PrintByKeyword(searchMode, keyword, students);
 			break;
 		}
 		case 5: {
-			//buffer to sort
-			int end = nameList.size();
-			for (int i = 0; i < end; i++) {
-				std::cout << nameList[i] << " ";
-				std::cout << idList[i] << " ";
-				std::cout << departmentList[i] << " ";
-				std::cout << birthYearList[i] << " ";
-				std::cout << telList[i] << "\n";
-			}
-			std::cout << "\nall items showed...!\n";
 			std::string pin = "N";
-
-			//
-			for (int i = 0, end = students.size(); i < end; i++) {
-				std::cout << students[i][0] << " ";
-				std::cout << students[i][1] << " ";
-				std::cout << students[i][3] << " ";
-				std::cout << students[i][2] << " ";
-				std::cout << students[i][4] << "\n";
-
-			}
-
-
+			PrintByKeyword(searchMode, keyword, students);
 			while (pin != "Y") {
 				std::cout << "[Plese enter 'Y' to go Main back]\n";
 				std::cin >> pin;
-				
 			}
 			ClearView();
 			break;
@@ -254,17 +285,14 @@ int MoveMainToNext(int& sortMode) {
 		}
 
 		}
-
 		return 1;
 	}
-
 	case 3: {
 		sortMode = SelectSortMode();
 		ClearView();
 		//TODO!! sortMode 에따라 vector 정렬시키기
 		return 1;
 	}
-
 	case 4: {
 		Exit();
 		return 0;
@@ -272,7 +300,6 @@ int MoveMainToNext(int& sortMode) {
 	case 5: {
 		return 1;
 	}
-
 	default: {
 		std::cout << "unpredictable error occured!! X_X";
 		return 0;
@@ -284,7 +311,6 @@ int MoveMainToNext(int& sortMode) {
 int main() {
 	int sortMode = 1;
 	while (MoveMainToNext(sortMode));
-
 	system("pause");
 	return 0;
 }

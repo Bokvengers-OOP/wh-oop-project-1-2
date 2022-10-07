@@ -2,6 +2,9 @@
 #include <iostream>
 #include "view.h"
 #include <string>
+#include <iomanip>
+#include <algorithm>
+#include <vector> 
 
 //MainMenu
 MainMenu::~MainMenu() {
@@ -109,11 +112,67 @@ int SearchView::GetNextView() {
 	}
 }
 
-void SearchView::PirntSearchByName() {}	
-void SearchView::PrintSearchByID() {}
-void SearchView::PrintSearchByAdmissionYear() {}
-void SearchView::PrintSearchByDepartment() {}
-void SearchView::PrintListAll(int sortMode) {}
+SearchView::SearchView() {};
+SearchView::SearchView(int searchView) {
+	nextView = searchView;
+}
+
+std::string SearchView::PrintSearchModeView() {
+	std::string keyword;
+	switch (this->nextView)
+	{
+	case 1: {
+		PirntSearchByName();
+		break;
+	}
+	case 2: {
+		PrintSearchByID();
+		break;
+	}
+	case 3: {
+		PrintSearchByAdmissionYear();
+		break;
+	}
+	case 4: {
+		PrintSearchByDepartment();
+		break;
+	}
+	default:
+		std::cout << "error ouccer in SearchView::PrintSearchModeView";
+		break;
+	}
+
+	std::cin >> keyword;
+	return keyword;
+}
+
+void SearchView::PirntSearchByName() {
+	std::cout << "Name keyword? :";
+}	
+void SearchView::PrintSearchByID() {
+	std::cout << "sutdent ID (10numbers) keyword? :";
+}
+void SearchView::PrintSearchByAdmissionYear() {
+	std::cout << "admisstion year (4 numbers) keyword? :";
+}
+void SearchView::PrintSearchByDepartment() {
+	std::cout << "Department name keyword? :";
+}
+
+void SearchView::PrintSearchByKeyword(int n, std::string& keyword,
+	std::vector<std::vector<std::string>>& students) {
+	std::cout << "\n";
+	std::cout << std::setw(16) << "Name" << std::setw(11) << "StudentID" << std::setw(20)
+		<< "Dept" << std::setw(12) << "Birth Year" << std::setw(11) << "Tel" << "\n";
+	for (int i = 0; i < students.size(); i++) {
+		if (students[i][n] == keyword) {
+			std::cout << std::setw(16) << students[i][0] << std::setw(11) << students[i][1] << std::setw(20)
+				<< students[i][3] << std::setw(12) << students[i][2] << std::setw(11) << students[i][4] << "\n";
+			std::cout.clear();
+		}
+	}
+	std::cout << "\nall items showed...!\n\n";
+}
 
 
 //SortionOptionView

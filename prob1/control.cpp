@@ -5,6 +5,12 @@
 #include <algorithm>
 #include <iomanip>
 
+
+//Declaration part
+
+//Start controler
+int StartControler(int& sortMode);
+
 //Control Mainview
 int GetNextPageNum();
 int MoveMainToNext();
@@ -27,6 +33,10 @@ void PrintByKeyword(int n, std::string& keyword,
 
 //Control SortingOptionView
 int SelectSortMode();
+bool compareName(std::vector<std::string> a, std::vector<std::string> b);
+bool compareID(std::vector<std::string> a, std::vector<std::string> b);
+bool compareAdmissionYear(std::vector<std::string> a, std::vector<std::string> b);
+bool compareDepartmentName(std::vector<std::string> a, std::vector<std::string> b);
 
 //Control ExitView
 void Exit();
@@ -34,6 +44,7 @@ void Exit();
 //Used basically
 void ClearView();
 
+//Definition part
 int GetNextPageNum() {
 	MainMenu mainMenu;
 	mainMenu.PrintView();
@@ -73,8 +84,7 @@ void PrintByKeyword(int n, std::string& keyword,
 	switch (n)
 	{
 	case 1: {
-		SearchView KeywordView;
-		KeywordView.PrintSearchByKeyword(0, keyword, students);
+		SearchView().PrintSearchByKeyword(0, keyword, students);
 		break;
 	}
 	case 2: {
@@ -86,19 +96,11 @@ void PrintByKeyword(int n, std::string& keyword,
 		break;
 	}
 	case 4: {
-		SearchView KeywordView;
-		KeywordView.PrintSearchByKeyword(3, keyword, students);
+		SearchView().PrintSearchByKeyword(3, keyword, students);
 		break;
 	}
 	case 5: {
-		std::cout << std::setw(16) << "Name" << std::setw(11) << "StudentID" << std::setw(20)
-			<< "Dept" << std::setw(12) << "Birth Year" << std::setw(11) << "Tel" << "\n";
-		for (int i = 0; i < students.size(); i++) {
-			std::cout << std::setw(16) << students[i][0] << std::setw(11) << students[i][1] << std::setw(20)
-				<< students[i][3] << std::setw(12) << students[i][2] << std::setw(11) << students[i][4] << "\n";
-			std::cout.clear();
-		}
-		std::cout << "\nall items showed...!\n\n";
+		SearchView().PrintSearchByKeyword(students);
 	}
 	default:
 		break;
@@ -131,7 +133,12 @@ void ClearView() {
 
 //function for sortin option
 bool compareName(std::vector<std::string> a, std::vector<std::string> b) {
-	return a[0] < b[0];
+	std::string str1 = a[0];
+	std::string str2 = b[0];
+	transform(str1.begin(), str1.end(), str1.begin(), ::tolower);
+	transform(str2.begin(), str2.end(), str2.begin(), ::tolower);
+
+	return str1 < str2;
 }
 
 bool compareID(std::vector<std::string> a, std::vector<std::string> b) {
@@ -143,18 +150,19 @@ bool compareAdmissionYear(std::vector<std::string> a, std::vector<std::string> b
 }
 
 bool compareDepartmentName(std::vector<std::string> a, std::vector<std::string> b) {
-	return a[3] < b[3];
+	std::string str1 = a[3];
+	std::string str2 = b[3];
+	transform(str1.begin(), str1.end(), str1.begin(), ::tolower);
+	transform(str2.begin(), str2.end(), str2.begin(), ::tolower);
+	return str1 < str2;
 }
 
-
-
-int MoveMainToNext(int& sortMode) {
+int StartControler(int& sortMode) {
 
 	// selectPage can be int 1~4 if it were not, that would be error occured!
 	int selectPage = GetNextPageNum();
 	ClearView();
 	int checkFile;
-
 
 	std::vector<std::vector<std::string>> students;
 
@@ -167,7 +175,7 @@ int MoveMainToNext(int& sortMode) {
 
 
 	//open file to read
-	//파일에서 읽어온 정보들을 control 단에서 통제하기 위한 변수에 저장
+	//store the information gotten from file in variables in control secttion to control
 	MyFile myFileToRead;
 	checkFile = myFileToRead.OpenFileToRead(selectPage);
 	myFileToRead.GetList(
@@ -190,7 +198,7 @@ int MoveMainToNext(int& sortMode) {
 		temp.clear();
 	}
 
-	//sort mode에 따라 정렬!
+	//sort with number(var sortmode)
 	switch (sortMode)
 	{
 	case 1: {
@@ -247,7 +255,7 @@ int MoveMainToNext(int& sortMode) {
 		std::string keyword;
 		std::vector<int> resultIndex;
 		std::cout << std::left;
-		switch (searchMode)	//TODO!! SearchMode에 따라 Search 구현하기
+		switch (searchMode)
 		{
 		case 1: {	//search by name
 			keyword = GetSearchKeyword(searchMode);
@@ -287,17 +295,16 @@ int MoveMainToNext(int& sortMode) {
 		}
 		return 1;
 	}
-	case 3: {
+	case 3: {	//sortmode
 		sortMode = SelectSortMode();
 		ClearView();
-		//TODO!! sortMode 에따라 vector 정렬시키기
 		return 1;
 	}
-	case 4: {
+	case 4: {	//exit
 		Exit();
 		return 0;
 	}
-	case 5: {
+	case 5: {	//there is no file t read
 		return 1;
 	}
 	default: {
@@ -310,7 +317,6 @@ int MoveMainToNext(int& sortMode) {
 
 int main() {
 	int sortMode = 1;
-	while (MoveMainToNext(sortMode));
-	system("pause");
+	while (StartControler(sortMode));
 	return 0;
 }

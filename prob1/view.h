@@ -46,7 +46,9 @@ public:
 
 	//print search mode
 	std::string PrintSearchModeView();
-	void PrintSearchByKeyword(int n, std::string &keyword,
+
+	void PrintSearchByKeyword(std::vector<std::vector<std::string>>& students);
+	void PrintSearchByKeyword(int n, std::string& keyword,
 		std::vector<std::vector<std::string>>& students);
 
 };

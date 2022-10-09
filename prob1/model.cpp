@@ -19,8 +19,10 @@ int MyFile::OpenFileToRead(int& selectPage) {
 
 	if (ifile.fail()) {
 		if (selectPage != 1) {
-			selectPage = 5;
-			std::cout << "there is no file plse create or choose insert mode \"file1.txt\"\n";			
+			if (selectPage != 4) {
+				selectPage = 5;
+				std::cout << "there is no file plse create or choose insert mode \"file1.txt\"\n";
+			}
 		}
 		return 0;
 	}
@@ -29,7 +31,7 @@ int MyFile::OpenFileToRead(int& selectPage) {
 			getline(ifile, buffer);
 			nameList.push_back(buffer);
 			buffer = "";
-			getline(ifile, buffer);			
+			getline(ifile, buffer);
 			idList.push_back(buffer);
 			buffer = "";
 			getline(ifile, buffer);
@@ -53,7 +55,7 @@ void MyFile::CloseFile() {
 
 void MyFile::WriteInfo(std::string& arg1, std::string& arg2, std::string& arg3,
 	std::string& arg4, std::string& arg5) {
-	
+
 	if (fileCheck == 1) {
 		ofile << "\n";
 		ofile << arg1 << "\n";
